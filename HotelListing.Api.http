@@ -1,0 +1,44 @@
+@HotelListing.Api_HostAddress = https://localhost:7116
+
+GET {{HotelListing.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{HotelListing.Api_HostAddress}}/api/hotels
+
+###
+
+POST {{HotelListing.Api_HostAddress}}/api/hotels
+Content-Type: application/json
+
+{
+  
+  "id": 3,
+  "name": "Bamboo",
+  "address": "Ikeja",
+  "rating": 4.5
+}
+
+###
+
+
+GET {{HotelListing.Api_HostAddress}}/api/hotels/3
+
+###
+
+DELETE {{HotelListing.Api_HostAddress}}/api/hotels/3
+
+###
+
+PUT {{HotelListing.Api_HostAddress}}/api/hotels/0
+Content-Type: application/json
+
+{
+  "id": 3,
+  "name": "Bamboo ProMax",
+  "address": "Ikeja",
+  "rating": 4.5
+}
+
+###
