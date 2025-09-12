@@ -1,4 +1,4 @@
-﻿namespace HotelListing.Api.Data;        
+﻿namespace HotelListing.Api.Data;
 
 public class Hotel
 {
@@ -6,4 +6,6 @@ public class Hotel
     public string Name { get; set; }
     public string Address { get; set; }
     public double Rating { get; set; }
+    public int CountryId { get; set; } // foreign key
+    public Country? Country { get; set; } // navigation 
 }
