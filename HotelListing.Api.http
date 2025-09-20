@@ -14,10 +14,11 @@ Content-Type: application/json
 
 {
   
-  "id": 3,
+
   "name": "Bamboo",
   "address": "Ikeja",
-  "rating": 4.5
+  "rating": 4.5,
+  "CountryId": 1
 }
 
 ###
@@ -31,14 +32,95 @@ DELETE {{HotelListing.Api_HostAddress}}/api/hotels/3
 
 ###
 
-PUT {{HotelListing.Api_HostAddress}}/api/hotels/0
+PUT {{HotelListing.Api_HostAddress}}/api/hotels/1
 Content-Type: application/json
 
 {
-  "id": 3,
-  "name": "Bamboo ProMax",
-  "address": "Ikeja",
-  "rating": 4.5
+  "Id": 3,
+  "Name": "Bamboo ProMax",
+  "Address": "Ikeja",
+  "Rating": 4.5
+  
 }
+
+###
+
+GET {{HotelListing.Api_HostAddress}}/api/countries
+
+###
+
+POST {{HotelListing.Api_HostAddress}}/api/countries
+Content-Type: application/json
+
+{
+  
+  "name": "Test Country 2",
+  "shortName": "TC"
+}
+
+###
+@id=1
+GET {{HotelListing.Api_HostAddress}}/api/countries/{{id}}
+
+###
+
+DELETE {{HotelListing.Api_HostAddress}}/api/countries/0
+
+###
+
+PUT {{HotelListing.Api_HostAddress}}/api/countries/{{id}}
+Content-Type: application/json
+
+{
+  "countryId": 1,
+  "name": "Nigeria",
+  "shortName": "NG"
+}
+
+###
+
+GET {{HotelListing.Api_HostAddress}}/api/hotels
+
+###
+
+POST {{HotelListing.Api_HostAddress}}/api/hotels
+Content-Type: application/json
+
+{
+  "Name": "New Hotel",
+  "Address": "That Street",
+  "Rating": "3",
+  "CountryId": 3
+}
+
+###
+
+@id=1
+GET {{HotelListing.Api_HostAddress}}/api/hotels/{{id}}
+
+###
+
+DELETE {{HotelListing.Api_HostAddress}}/api/hotels/0
+
+###
+
+PUT {{HotelListing.Api_HostAddress}}/api/hotels/1
+Content-Type: application/json
+
+{
+  "Id": 1,
+  "Name": "New Hotel",
+  "Address": "That Street",
+  "Rating": "3",
+  "CountryId": 1
+}
+
+###
+
+GET {{HotelListing.Api_HostAddress}}/api/countries
+
+###
+
+GET {{HotelListing.Api_HostAddress}}/api/countries
 
 ###

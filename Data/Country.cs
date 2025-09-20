@@ -6,7 +6,7 @@ public class Country // one to many hotels, hence the reason for a list as the n
 {
     [Key]
     public int CountryId { get; set; }
-    public string  Name { get; set; }
-    public string ShortName { get; set; }
+    public required string  Name { get; set; }
+    public required string ShortName { get; set; }
     public IList<Hotel> Hotels { get; set; } = []; // navigation property
 }
