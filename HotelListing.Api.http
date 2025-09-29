@@ -1,4 +1,6 @@
 @HotelListing.Api_HostAddress = https://localhost:7116
+@json = application/json
+@apiKey = SmVzdXNteXByb3RlY3RvcjIwMjU=
 
 GET {{HotelListing.Api_HostAddress}}/weatherforecast/
 Accept: application/json
@@ -122,5 +124,24 @@ GET {{HotelListing.Api_HostAddress}}/api/countries
 ###
 
 GET {{HotelListing.Api_HostAddress}}/api/countries
+X-Api-Key: {{apiKey}}
+
+###
+
+POST {{HotelListing.Api_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  //LoginDto
+}
+
+###
+
+POST {{HotelListing.Api_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  //RegisterUserDto
+}
 
 ###
