@@ -1,9 +1,7 @@
 ﻿using HotelListing.Api.Contracts;
-using HotelListing.Api.Data;
-using HotelListing.Api.DTOs.Country;
+using HotelListing.Api.Domain;
 using HotelListing.Api.DTOs.Hotel;
-using HotelListing.Api.Results;
-using HotelListing.Api.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +9,7 @@ namespace HotelListing.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class HotelsController(IHotelsService hotelsService) : BaseApiController
 {
 
@@ -21,10 +20,10 @@ public class HotelsController(IHotelsService hotelsService) : BaseApiController
         var result = await hotelsService.GetHotelsAsync();
 
         return ToActionResult(result);
-       
+
     }
 
- 
+
 
     // GET: api/Hotels/5
     [HttpGet("{id}")]
@@ -43,6 +42,7 @@ public class HotelsController(IHotelsService hotelsService) : BaseApiController
     // PUT: api/Hotels/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> PutHotel(int id, UpdateHotelDto hotelDto)
     {
         if (id != hotelDto.Id)
@@ -72,9 +72,10 @@ public class HotelsController(IHotelsService hotelsService) : BaseApiController
     // POST: api/Hotels
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
+    [Authorize(Roles = "Administrator")]
     public async Task<ActionResult<Hotel>> PostHotel(CreateHotelDto hotelDto)
     {
-        
+
         var hotel = await hotelsService.CreateHotelAsync(hotelDto);
         return Ok(hotel);
 
@@ -83,6 +84,7 @@ public class HotelsController(IHotelsService hotelsService) : BaseApiController
 
     // DELETE: api/Hotels/5
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> DeleteHotel(int id)
     {
         await hotelsService.DeleteHotelAsync(id);
@@ -90,6 +92,6 @@ public class HotelsController(IHotelsService hotelsService) : BaseApiController
         return NoContent();
     }
 
-    
+
 
 }

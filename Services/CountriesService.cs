@@ -1,18 +1,16 @@
-﻿using AutoMapper.QueryableExtensions;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using HotelListing.Api.Common.Constants;
+using HotelListing.Api.Common.Results;
 using HotelListing.Api.Contracts;
-using HotelListing.Api.Data;
+using HotelListing.Api.Domain;
 using HotelListing.Api.DTOs.Country;
-using HotelListing.Api.DTOs.Hotel;
-using HotelListing.Api.Results;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper;
-using HotelListing.Api.Constants;
 
 
 namespace HotelListing.Api.Services;
 
-public class CountriesService(HotelListingDbContext context,  IMapper mapper) : ICountriesService
+public class CountriesService(HotelListingDbContext context, IMapper mapper) : ICountriesService
 {
     public async Task<Result<IEnumerable<GetCountriesDto>>> GetCountriesAsync()
     {
@@ -30,8 +28,8 @@ public class CountriesService(HotelListingDbContext context,  IMapper mapper) : 
             .ProjectTo<GetCountryDto>(mapper.ConfigurationProvider)
             .FirstOrDefaultAsync();
 
-        return country is null 
-            ? Result<GetCountryDto>.Failure(new Error(ErrorCodes.NotFound, $"Country '{id}' was not found.")) 
+        return country is null
+            ? Result<GetCountryDto>.Failure(new Error(ErrorCodes.NotFound, $"Country '{id}' was not found."))
             : Result<GetCountryDto>.Success(country);
     }
 
@@ -52,7 +50,7 @@ public class CountriesService(HotelListingDbContext context,  IMapper mapper) : 
                 return Result.NotFound(new Error("NotFound", $"Country '{id}' was not found."));
             }
 
-           
+
 
             country.Name = updateDto.Name;
             country.ShortName = updateDto.ShortName;

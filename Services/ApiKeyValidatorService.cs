@@ -1,14 +1,15 @@
 ﻿using HotelListing.Api.Contracts;
-using HotelListing.Api.Data;
+using HotelListing.Api.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelListing.Api.Services;
 
 public class ApiKeyValidatorService(HotelListingDbContext db) : IApiKeyValidatorService
 {
-    
+
     public async Task<bool> IsValidAsync(string apiKey, CancellationToken ct = default)
     {
+        //return Task.FromResult(apiKey.Equals(configuration["ApiKey"]));
         if (string.IsNullOrWhiteSpace(apiKey)) return false;
 
         var apiKeyEntity = await db.ApiKeys
@@ -19,5 +20,6 @@ public class ApiKeyValidatorService(HotelListingDbContext db) : IApiKeyValidator
 
         // If there is no expiry date or the expiry date does not exceed today's date.
         return apiKeyEntity.IsActive;
+
     }
 }

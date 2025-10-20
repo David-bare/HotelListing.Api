@@ -1,0 +1,30 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+@json = application/json
+@host = https//localhost:7060
+@hotelId = 3
+@bookingId = 1
+@today = {{$localDatetime iso8601}}
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhNWI2ZDczYy04NTI1LTQ2ZGQtOGMwMC01NTk1ZDBiMzBhYzAiLCJlbWFpbCI6ImFkbWluMUBsb2NhbGhvc3QuY29tIiwianRpIjoiOWIxNDYxNWYtNTliMS00YjVmLWE1NzAtNWQ1OGQ3OGY4MGYyIiwibmFtZSI6Imxhc3QsIGZpcnp0IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTc2MDY2MzU2MCwiaXNzIjoiSG90ZWxMaXN0aW5nQVBJIiwiYXVkIjoiSG90ZWxMaXN0aW5nQVBJQ2xpZW50In0.0Wo919qXZFUguh5mEplOAAa4v9d_KbaZcmDaeOTL7yU
+
+
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "admin1@localhost.com",
+  "password": "P@ssword1",
+  "firstName": "firzt",
+  "lastName": "last",
+  "role": "Administrator"
+}
+
+POST {{host}}/api/hotels/{{hotelId}}/bookings
+Content-Type: application/json
+Authorization: Bearer {{token}} 
+
+{
+  "hotelId" : {{hotelId}},
+  "checkIn" : "2025-10-15",
+  "checkOut" : "2025-10-18",
+  "guests" : 2
+}

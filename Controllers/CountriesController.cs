@@ -1,23 +1,21 @@
 ﻿using HotelListing.Api.Contracts;
 using HotelListing.Api.DTOs.Country;
-using HotelListing.Api.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace HotelListing.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class CountriesController(ICountriesService countriesService) : BaseApiController
 {
 
     // GET: api/Countries
     [HttpGet]
-    [Authorize]
     public async Task<ActionResult<IEnumerable<GetCountriesDto>>> GetCountries()
     {
-        
+
         var result = await countriesService.GetCountriesAsync();
 
         return ToActionResult(result);
@@ -30,15 +28,14 @@ public class CountriesController(ICountriesService countriesService) : BaseApiCo
         var result = await countriesService.GetCountryAsync(id);
         return ToActionResult(result);
 
-       
     }
 
     // PUT: api/Countries/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> PutCountry(int id, UpdateCountryDto updateDto)
     {
-       
 
         var result = await countriesService.UpdateCountryAsync(id, updateDto);
         return ToActionResult(result);
@@ -47,6 +44,7 @@ public class CountriesController(ICountriesService countriesService) : BaseApiCo
     // POST: api/Countries
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
+    [Authorize(Roles = "Administrator")]
     public async Task<ActionResult<GetCountryDto>> PostCountry(CreateCountryDto createDto)
     {
         // Create country
@@ -58,6 +56,7 @@ public class CountriesController(ICountriesService countriesService) : BaseApiCo
 
     // DELETE: api/Countries/5
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> DeleteCountry(int id)
     {
         // Delete Country Here
@@ -65,7 +64,7 @@ public class CountriesController(ICountriesService countriesService) : BaseApiCo
         return ToActionResult(result);
     }
 
-   
 
-    
+
+
 }

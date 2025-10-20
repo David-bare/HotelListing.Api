@@ -1,7 +1,6 @@
-﻿using HotelListing.Api.Constants;
-using HotelListing.Api.Results;
+﻿using HotelListing.Api.Common.Constants;
+using HotelListing.Api.Common.Results;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 
 namespace HotelListing.Api.Controllers;
 
@@ -24,6 +23,7 @@ public abstract class BaseApiController : ControllerBase
             ErrorCodes.Validation => BadRequest(e.Description),
             ErrorCodes.BadRequest => BadRequest(e.Description),
             ErrorCodes.Conflict => Conflict(e.Description),
+            ErrorCodes.Forbid => Forbid(e.Description),
             _ => Problem(detail: string.Join("; ", errors.Select(x => x.Description)), title: e.Code)
         };
     }

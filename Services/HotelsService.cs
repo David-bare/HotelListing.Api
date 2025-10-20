@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using HotelListing.Api.Constants;
+using HotelListing.Api.Common.Constants;
+using HotelListing.Api.Common.Results;
 using HotelListing.Api.Contracts;
-using HotelListing.Api.Data;
-using HotelListing.Api.DTOs.Country;
+using HotelListing.Api.Domain;
 using HotelListing.Api.DTOs.Hotel;
-using HotelListing.Api.Results;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelListing.Api.Services
@@ -58,7 +57,7 @@ namespace HotelListing.Api.Services
                 return Result.NotFound(new Error(ErrorCodes.NotFound, $"Country '{updateDto.CountryId}' was not found."));
             }
 
-           
+
 
 
             hotel.Name = updateDto.Name;
@@ -77,7 +76,7 @@ namespace HotelListing.Api.Services
         public async Task<Result<GetHotelDto>> CreateHotelAsync(CreateHotelDto hotelDto)
         {
             var countryExists = await countriesService.CountryExistsAsync(hotelDto.CountryId);
-            
+
             if (!countryExists)
             {
                 return Result<GetHotelDto>.Failure(new Error(ErrorCodes.NotFound, $"Country '{hotelDto.CountryId}'" +

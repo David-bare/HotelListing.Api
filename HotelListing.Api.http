@@ -1,6 +1,12 @@
 @HotelListing.Api_HostAddress = https://localhost:7116
 @json = application/json
-@apiKey = SmVzdXNteXByb3RlY3RvcjIwMjU=
+@apiKey = dXNlckBsb2NhbGhvc3QuY29tOlBAc3N3b3JkMQ==
+@host = https//localhost:7060
+@hotelId = 1
+@bookingId = 1
+@today = {{$localDatetime iso8601}}
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhNWI2ZDczYy04NTI1LTQ2ZGQtOGMwMC01NTk1ZDBiMzBhYzAiLCJlbWFpbCI6ImFkbWluMUBsb2NhbGhvc3QuY29tIiwianRpIjoiMzBlZTUzNGYtNDgxNC00NjUwLWI5MTEtNmRkYjUzNGEyZmYwIiwibmFtZSI6Imxhc3QsIGZpcnp0IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTc2MDY2NDIxNywiaXNzIjoiSG90ZWxMaXN0aW5nQVBJIiwiYXVkIjoiSG90ZWxMaXN0aW5nQVBJQ2xpZW50In0.Iw4b-V7-Ms5-0gh5GErMHOB1dmHSI4a_0I2HBMbPacY
+
 
 GET {{HotelListing.Api_HostAddress}}/weatherforecast/
 Accept: application/json
@@ -53,6 +59,8 @@ GET {{HotelListing.Api_HostAddress}}/api/countries
 
 POST {{HotelListing.Api_HostAddress}}/api/countries
 Content-Type: application/json
+Authorization: Bearer {{token}}
+
 
 {
   
@@ -119,20 +127,21 @@ Content-Type: application/json
 
 ###
 
-GET {{HotelListing.Api_HostAddress}}/api/countries
 
 ###
 
 GET {{HotelListing.Api_HostAddress}}/api/countries
-X-Api-Key: {{apiKey}}
-
+# X-Api-Key: {{apiKey}}
+# Authorization: Basic dXNlckBsb2NhbGhvc3QuY29tOlBAc3N3b3JkMQ==
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTZkMmI0My0wOTIzLTRmMGQtYmQ2OS00MjQ5N2YxOTFiMzUiLCJlbWFpbCI6InVzZXJAbG9jYWxob3N0LmNvbSIsImp0aSI6IjMzNGRhMTcyLTY0NjItNDRiZi1iNzI0LTE2ZTgzNTUyMTIzNSIsIm5hbWUiOiJsYXN0LCBmaXJzdCIsImV4cCI6MTc1OTMyNTk1NiwiaXNzIjoiSG90ZWxMaXN0aW5nQVBJIiwiYXVkIjoiSG90ZWxMaXN0aW5nQVBJQ2xpZW50In0.956QlElwuO0yzC3rpfH25x56Wadw1U8i6EPqYOOKRXc
 ###
 
 POST {{HotelListing.Api_HostAddress}}/api/auth/login
 Content-Type: application/json
 
 {
-  //LoginDto
+  "email": "admin1@localhost.com",
+  "password": "P@ssword1"
 }
 
 ###
@@ -141,7 +150,61 @@ POST {{HotelListing.Api_HostAddress}}/api/auth/register
 Content-Type: application/json
 
 {
-  //RegisterUserDto
+  "email": "admin1@localhost.com",
+  "password": "P@ssword1",
+  "firstName": "firzt",
+  "lastName": "last",
+  "role": "Administrator"
 }
 
+
+###
+
+
+###
+
+POST {{HotelListing.Api_HostAddress}}/api/countries
+Content-Type: application/json
+
+{
+  //CreateCountryDto
+}
+
+###
+
+GET {{HotelListing.Api_HostAddress}}/api/countries
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhNWI2ZDczYy04NTI1LTQ2ZGQtOGMwMC01NTk1ZDBiMzBhYzAiLCJlbWFpbCI6ImFkbWluMUBsb2NhbGhvc3QuY29tIiwianRpIjoiNTk0MDQxMDYtNzQzMS00OTRlLWFhZTItMDMzYjU5YTExMmVlIiwibmFtZSI6Imxhc3QsIGZpcnp0IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTc1OTM1MjAxNSwiaXNzIjoiSG90ZWxMaXN0aW5nQVBJIiwiYXVkIjoiSG90ZWxMaXN0aW5nQVBJQ2xpZW50In0.dau-lOxknMmmM3UkkNztwWGPT6_QFtQEGDOg_CBCQJM
+###
+
+POST {{HotelListing.Api_HostAddress}}/api/ApiKey
+X-Api-Key: {{apiKey}}
+
+
+
+
+###
+
+##Bookings
+POST {{HotelListing.Api_HostAddress}}/api/hotels/{{hotelId}}/bookings
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "hotelId" : {{hotelId}},
+  "checkIn" : "2025-10-15",
+  "checkOut" : "2025-10-18",
+  "guests" : 2
+}
+
+###
+
+POST {{HotelListing.Api_HostAddress}}/api/hotels
+Content-Type: application/json
+Authorization: Bearer {{token}}
+{
+  "name": "Hotel 1",
+  "address": "Address 1",
+  "rating": 5,
+  "countryId": 1
+}
 ###

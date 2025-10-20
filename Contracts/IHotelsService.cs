@@ -1,5 +1,5 @@
-﻿using HotelListing.Api.DTOs.Hotel;
-using HotelListing.Api.Results;
+﻿using HotelListing.Api.Common.Results;
+using HotelListing.Api.DTOs.Hotel;
 
 namespace HotelListing.Api.Contracts
 {
@@ -8,7 +8,7 @@ namespace HotelListing.Api.Contracts
         Task<bool> HotelExistsAsync(int id);
         Task<bool> HotelExistsAsync(string name);
         Task DeleteHotelAsync(int id);
-       
+
         Task<Result<IEnumerable<GetHotelDto>>> GetHotelsAsync();
         Task<Result<GetHotelDto?>> GetHotelAsync(int id);
         Task<Result> UpdateHotelAsync(int id, UpdateHotelDto updateDto);

@@ -18,6 +18,7 @@ public class GetHotelDto
     public double Rating { get; set; } 
     public int CountryId { get; set; } 
     public string Country { get; set; } = string.Empty;
+    public string CountryName { get; set; }
 }
 
 public record GetHotelSlimDto (

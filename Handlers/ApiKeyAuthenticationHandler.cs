@@ -1,12 +1,8 @@
-﻿using HotelListing.Api.Constants;
+﻿using HotelListing.Api.Common.Constants;
 using HotelListing.Api.Contracts;
-using HotelListing.Api.Data;
-using HotelListing.Api.DTOs.Auth;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
-using System.Text;
 using System.Text.Encodings.Web;
 
 namespace HotelListing.Api.Handlers;
@@ -20,21 +16,21 @@ public class ApiKeyAuthenticationHandler(
 {
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-       string apiKey = string.Empty;
+        string apiKey = string.Empty;
 
         if (Request.Headers.TryGetValue(AuthenticationDefaults.ApiKeyHeaderName, out var
-            headerValues)) 
+            headerValues))
         {
             apiKey = headerValues.ToString();
         }
 
-        if (string.IsNullOrWhiteSpace(apiKey)) 
+        if (string.IsNullOrWhiteSpace(apiKey))
         {
             return AuthenticateResult.NoResult();
         }
 
         var valid = await apiKeyValidatorService.IsValidAsync(apiKey, Context.RequestAborted);
-        if (!valid) 
+        if (!valid)
         {
             return AuthenticateResult.Fail("Invalid API Key.");
         }

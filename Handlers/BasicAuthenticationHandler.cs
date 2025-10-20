@@ -1,8 +1,6 @@
 ﻿using HotelListing.Api.Contracts;
-using HotelListing.Api.Data;
 using HotelListing.Api.DTOs.Auth;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using System.Security.Claims;
 using System.Text;
@@ -19,7 +17,7 @@ public class BasicAuthenticationHandler(
 {
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        if (!Request.Headers.TryGetValue("Authoriation", out var authHeaderValues))
+        if (!Request.Headers.TryGetValue("Authorization", out var authHeaderValues))
         {
             return AuthenticateResult.NoResult();
         }
