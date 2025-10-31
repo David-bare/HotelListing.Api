@@ -1,5 +1,5 @@
 ﻿using HotelListing.Api.Common.Constants;
-using HotelListing.Api.Common.Models;
+using HotelListing.Api.Common.Models.Config;
 using HotelListing.Api.Common.Results;
 using HotelListing.Api.Contracts;
 using HotelListing.Api.Domain;

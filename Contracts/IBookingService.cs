@@ -1,4 +1,5 @@
-﻿using HotelListing.Api.Common.Results;
+﻿using HotelListing.Api.Common.Models.Paging;
+using HotelListing.Api.Common.Results;
 using HotelListing.Api.DTOs.Booking;
 
 namespace HotelListing.Api.Contracts;
@@ -9,7 +10,7 @@ public interface IBookingService
     Task<Result> AdminConfirmBookingAsync(int hotelId, int bookingId);
     Task<Result> CancelBookingAsync(int hotelId, int bookingId);
     Task<Result<GetBookingDto>> CreateBookingAsync(CreateBookingDto dto);
-    Task<Result<IEnumerable<GetBookingDto>>> GetBookingForHotelAsync(int hotelId);
-    Task<Result<IEnumerable<GetBookingDto>>> GetUserBookingsForHotelAsync(int hotelId);
+    Task<Result<PagedResult<GetBookingDto>>> GetBookingForHotelAsync(int hotelId, PaginationParameters paginationParameters);
+    Task<Result<PagedResult<GetBookingDto>>> GetUserBookingsForHotelAsync(int hotelId, PaginationParameters paginationParameters);
     Task<Result<GetBookingDto>> UpdateBookingAsync(int hotelId, int bookingId, UpdateBookingDto updateBookingDto);
 }

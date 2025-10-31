@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using HotelListing.Api.Common.Constants;
+using HotelListing.Api.Common.Enums;
+using HotelListing.Api.Common.Models.Extensions;
+using HotelListing.Api.Common.Models.Paging;
 using HotelListing.Api.Common.Results;
 using HotelListing.Api.Contracts;
 using HotelListing.Api.Domain;
-using HotelListing.Api.Domain.Enums;
 using HotelListing.Api.DTOs.Booking;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,17 +14,17 @@ namespace HotelListing.Api.Services
 {
     public class BookingService(HotelListingDbContext context, IUsersService usersService, IMapper mapper) : IBookingService
     {
-        public async Task<Result<IEnumerable<GetBookingDto>>> GetBookingForHotelAsync(int hotelId)
+        public async Task<Result<PagedResult<GetBookingDto>>> GetBookingForHotelAsync(int hotelId, PaginationParameters paginationParameters)
         {
             var hotelExists = await context.Hotels.AnyAsync(h => h.Id == hotelId);
             if (!hotelExists)
-                return Result<IEnumerable<GetBookingDto>>.Failure(new Error(ErrorCodes.NotFound, $"Hotel '{hotelId}' was not found."));
+                return Result<PagedResult<GetBookingDto>>.Failure(new Error(ErrorCodes.NotFound, $"Hotel '{hotelId}' was not found."));
 
             var bookings = await context.Bookings
                 .Where(b => b.HotelId == hotelId)
                 .OrderBy(b => b.CheckIn)
                 .ProjectTo<GetBookingDto>(mapper.ConfigurationProvider)
-                .ToListAsync();
+                .ToPagedResultAsync(paginationParameters);
 
             //.Select(b => new GetBookingDto
             //(
@@ -38,7 +40,7 @@ namespace HotelListing.Api.Services
             //    b.UpdatedAtUtc
             //))
 
-            return Result<IEnumerable<GetBookingDto>>.Success(bookings);
+            return Result<PagedResult<GetBookingDto>>.Success(bookings);
         }
 
         public async Task<Result<GetBookingDto>> CreateBookingAsync(CreateBookingDto dto)
@@ -259,20 +261,20 @@ namespace HotelListing.Api.Services
 
         }
 
-        public async Task<Result<IEnumerable<GetBookingDto>>> GetUserBookingsForHotelAsync(int hotelId)
+        public async Task<Result<PagedResult<GetBookingDto>>> GetUserBookingsForHotelAsync(int hotelId, PaginationParameters paginationParameters)
         {
             var userId = usersService.UserId;
 
             var hotelExists = await context.Hotels.AnyAsync(h => h.Id == hotelId);
 
             if (!hotelExists)
-                return Result<IEnumerable<GetBookingDto>>.Failure(new Error(ErrorCodes.NotFound, $"Hotel '{hotelId}' was not found."));
+                return Result<PagedResult<GetBookingDto>>.Failure(new Error(ErrorCodes.NotFound, $"Hotel '{hotelId}' was not found."));
 
             var bookings = await context.Bookings
                 .Where(b => b.HotelId == hotelId && b.UserId == userId)
                 .OrderBy(b => b.CheckIn)
                 .ProjectTo<GetBookingDto>(mapper.ConfigurationProvider)
-                .ToListAsync();
+                .ToPagedResultAsync(paginationParameters);
             //.Select(b => new GetBookingDto(
             //    b.Id,
             //    b.HotelId,
@@ -286,7 +288,7 @@ namespace HotelListing.Api.Services
             //    b.UpdatedAtUtc
             //    ))
 
-            return Result<IEnumerable<GetBookingDto>>.Success(bookings);
+            return Result<PagedResult<GetBookingDto>>.Success(bookings);
         }
 
         public async Task<bool> IsOverlap(int hotelId, string userId, DateOnly checkIn, DateOnly checkOut, int? bookingId = null)
@@ -306,5 +308,10 @@ namespace HotelListing.Api.Services
 
             return await overLap.AnyAsync();
         }
+
+        //Task<Result<IEnumerable<GetBookingDto>>> IBookingService.GetUserBookingsForHotelAsync(int hotelId)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
